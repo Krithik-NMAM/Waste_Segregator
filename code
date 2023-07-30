@@ -1,0 +1,49 @@
+#include<Servo.h>
+Servo s1;
+int Moisture_dig_signal=4;
+int Sensor_State=1;
+void setup() {
+s1.attach(9);
+pinMode(2,INPUT);
+ pinMode(Moisture_dig_signal,INPUT);
+ Serial.begin(9600);
+
+}
+void dry()
+    {
+      s1.write(0);
+    }
+
+    void wet()
+    {
+      s1.write(180);
+    }
+
+    void neutral()
+    {
+      s1.write(90);
+    }
+
+void loop() {
+  int touch=digitalRead(2);
+ Serial.print("digital level:");
+ Sensor_State=digitalRead(Moisture_dig_signal);
+ 
+ if(Sensor_State==1 && touch==1) {
+   Serial.println("dry");
+   dry();
+   delay(1000);
+
+   }
+   else if(Sensor_State==0 && touch==1) {
+     Serial.println("dry");
+     wet();
+     delay(1000);
+   }
+    else {
+      neutral();
+    }
+     
+     delay(200);
+
+}
